@@ -31,6 +31,18 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: fixing ununtu
+        if: runner.os = 'ubuntu'
+        run: |
+          npm install --include=optional sharp
+          npm install --os=linux --cpu=x64 sharp
+
+      - name: fixing macOS
+        if: runner.os = 'macos'
+        run: |
+          npm install --include=optional sharp
+          npm install --os=darwin --cpu=arm64 sharp  
+
       - name: Testing on OS (${{ matrix.os }}) with Node.js (version ${{ matrix.node-version }}) attempt ${{ matrix.attempt }}
         run: |
           echo "Run attempt: ${{ matrix.attempt }}"
